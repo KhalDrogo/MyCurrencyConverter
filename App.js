@@ -1,9 +1,9 @@
-import { ActivityIndicator, StyleSheet, ScrollView, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, ScrollView, View, Text } from 'react-native';
 import React, {useEffect, useState} from 'react'
 import ExchangeRatesTable from './components/ExchangeRatesTable'
 import Converter from './components/Converter';
 
-
+const uri = "https://www.cnb.cz/en/financial-markets/foreign-exchange-market/central-bank-exchange-rate-fixing/central-bank-exchange-rate-fixing/daily.txt";
 
 export default function App() {
   const [isLoading, setLoading] = useState(true);
@@ -12,10 +12,9 @@ export default function App() {
 
   const getCurrencies = async () => {
     try {
-      const responseObject = await fetch('https://www.cnb.cz/en/financial-markets/foreign-exchange-market/central-bank-exchange-rate-fixing/central-bank-exchange-rate-fixing/daily.txt');
-      
-      const text = await responseObject.text();
-      const lines = text.split('\n');
+      const responseObject = await fetch(uri);
+      const lines = (await responseObject.text()).split('\n');
+
       const rows = [];
       const exchangeRates = [];
 
@@ -52,6 +51,7 @@ export default function App() {
         ) : (
           <View>
             <ExchangeRatesTable tableData = {tableData} />
+            <Text style={styles.header}>Convert Currencies to CZK</Text>
             <Converter exchangeRates = {exchangeRates} />
           </View>
         )
@@ -63,4 +63,5 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {padding: 10, paddingTop: 40},
+  header: {textAlign: 'center', fontSize: 20, fontWeight: 'bold'},
 });
