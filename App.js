@@ -22,7 +22,7 @@ export default function App() {
         const columns = lines[i].split('|');
 
         rows.push(columns);
-        exchangeRates.push([columns[3], columns[4]]);
+        exchangeRates.push([columns[3], (columns[4] / columns[2])]);
       }
 
       const tableData = {
@@ -51,7 +51,7 @@ export default function App() {
         ) : (
           <View>
             <ExchangeRatesTable tableData = {tableData} />
-            <Text style={styles.header}>Convert Currencies to CZK</Text>
+            <Text style={styles.header}>Convert CZK to different currencies:</Text>
             <Converter exchangeRates = {exchangeRates} />
           </View>
         )

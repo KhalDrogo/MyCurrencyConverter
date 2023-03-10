@@ -12,17 +12,17 @@ const Converter = (props) => {
       }, []);
 
     const onPressCalculate = () => {
-        setResult((Number(amount) * Number(selectedValue)).toPrecision(5) + " CZK");
+        setResult((Number(amount) / Number(selectedValue)).toPrecision(5));
       };
 
     return (
         <View>
             <View style={styles.rowContainer}>
-                <Text style={styles.title}>Amount: </Text>
+                <Text style={styles.title}>Amount in CZK: </Text>
                 <TextInput defaultValue={amount} onChangeText={newAmount => setAmount(newAmount)} keyboardType='numeric' style={styles.inputField} />
             </View>
             <View style={styles.rowContainer}>
-                <Text style={styles.title} >Currency: </Text>
+                <Text style={styles.title} >Select currency: </Text>
                 <Picker
                     selectedValue={selectedValue}
                     style={styles.dropdown}
